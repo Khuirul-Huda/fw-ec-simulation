@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <title>Firewall dan Enkripsi | Prototipe versi digital</title>
+</head>
+
+<body>
+    <header>
+
+    </header>
+    <main class="container mx-auto">
+        <section class="border rounded-lg p-5 m-5">
+            <h2 class="font-bold text-3xl">1. Firewall</h2>
+            <p>Simulasi sederhana bagaimana firewall bekerja..</p>
+            <div>
+                <button id="start-sim"
+                    class="p-1 px-2 bg-yellow-300 rounded-full transition-all hover:-translate-y-1">Mulai</button>
+                <button id="reset-sim"
+                    class="p-1 px-2 bg-yellow-300 rounded-full transition-all hover:-translate-y-1">Reset</button>
+                    <button id="reset-firewall"
+                    class="p-1 px-2 bg-yellow-300 rounded-full transition-all hover:-translate-y-1">Reset Firewall</button>
+
+            </div>
+            <div class="my-5 h-20 w-full relative rounded-lg">
+                <div class="absolute ring-4 ring-green-200 w-14 top-0  h-10 bg-green-500 rounded-lg p-2"
+                    id="paket-prototipe">Paket</div>
+                <div class="absolute ring-4 ring-blue-200 w-14 top-0  h-10 bg-blue-500 rounded-lg p-2"
+                    id="client-prototipe">Client</div>
+                <div class="absolute   left-1/2 h-10  bg-purple-300 flex items-center px-32 ring-4 ring-purple-200"
+                    id="firewall-prototipe"> <span>Firewall</span>
+                </div>
+                <div class="absolute w-18 h-10 top-0 right-0  bg-blue-400 ring-4 ring-blue-400 rounded-lg px-5 flex items-center"
+                    id="server-prototipe">Server</div>
+            </div>
+            <div class="flex flex-wrap justify-center">
+                <form action="" id="paket" class="border rounded-lg m-5 p-2 flex flex-col">
+                    <h3 class="font-bold text-lg">Konfigurasi Paket</h3>
+                    <label for="destination-port">Destination Port: </label>
+                    <input class="border p-1 rounded-md" value="80" placeholder="80 (default)" type="number"
+                        name="destination-port" id="destination-port">
+                    <!-- <button class="block p-2 mt-1 bg-yellow-300 hover:-translate-y-1 transition-all">Kirim Paket</button> -->
+
+                </form>
+                <form action="" id="firewall-rules" class="border rounded-lg m-5 p-2 flex flex-col">
+                    <h3 class="font-bold text-lg">Aturan Firewall</h3>
+                    <label for="port-input">Masukkan Port:</label>
+                    <input class="border rounded-md p-2" placeholder="80" type="text" name="port-input" id="port-input"
+                        required>
+
+                    <label for="rule-type">Jenis Aturan:</label>
+                    <select name="rule-type" class="my-1 p-2 rounded-md mb-2" id="rule-type">
+                        <option value="ALLOW">ALLOW</option>
+                        <option value="DENY">DENY</option>
+                    </select>
+
+                    <button type="submit"
+                        class="p-2 px-4 bg-yellow-300 rounded-full transition-all hover:-translate-y-1">Tambah</button>
+                </form>
+            </div>
+
+            <div class="border p-4 rounded-lg">
+                <h3 class="font-bold ">Daftar Aturan Firewall</h3>
+                <div id="firewall-rules-list">
+                    <table class="table-fixed w-full text-center table">
+                        <thead>
+                            <tr>
+                                <th>Port</th>
+                                <th>Tipe</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-firewall">
+                            <tr>
+                                <td>19132</td>
+                                <td>ALLOW</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+
+        </section>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+    <script>
+
+
+        tippy('#paket-prototipe', {
+            content: 'Source IP: 20.20.20.20 <br> Source Port: 65746 <br> Destination IP: 36.72.0.102 <br> Destination Port: (sesuai konfigurasi)',
+            allowHTML: true
+        })
+
+        tippy('#firewall-prototipe', {
+            content: 'Lapisan firewall, daftar rule ada di bawah',
+            allowHTML: true
+        })
+
+
+        tippy('#server-prototipe', {
+            content: 'Public IP: 36.72.0.102',
+            allowHTML: true
+        })
+
+
+        // Form handling
+
+
+        function getPacketDestinationPort() {
+            return parseInt(document.getElementById('destination-port').value)
+        }
+
+
+        //  START
+
+        let firewallRules = [{ "port": 22, "type": "ALLOW" }]
+        updateLayoutFirewall()
+
+        const pixelRatio = window.devicePixelRatio || 1
+        console.log( )
+        if (screen.width * pixelRatio < 1366) {
+            showNotification('Gunakan perangkat desktop')
+        }
+
+        document.getElementById('firewall-rules').addEventListener('submit', (event) => {
+            event.preventDefault();
+            addFirewallRule(Number.parseInt(document.getElementById('port-input').value), document.getElementById('rule-type').value)
+            updateLayoutFirewall()
+        })
+
+        document.getElementById('start-sim').addEventListener('click', (e) => {
+            onStartClicked()
+        })
+
+        document.getElementById('reset-sim').addEventListener('click', (e) => {
+            onResetPosClicked()
+        })
+
+        document.getElementById('reset-firewall').addEventListener('click', (e) => {
+            clearFirewallRules()
+        })
+
+
+        function addFirewallRule(port, type) {
+            $isAvailable = ruleExist(port)
+            if ($isAvailable != null) {
+                updateFirewallRule($isAvailable, type)
+                showNotification('Berhasil diupdate')
+
+                return
+            } else {
+                firewallRules.push({
+                    port: port,
+                    type: type
+                })
+                showNotification('Berhasil ditambahkan')
+            }
+        }
+
+        function updateFirewallRule(index, newVal) {
+            firewallRules[index]['type'] = newVal
+        }
+
+        function isBlocked(port) {
+            index = ruleExist(port)
+
+            if (index == null || firewallRules[index]['type'] == 'DENY') return true
+            return false
+        }
+
+        /**
+         * return null or index number
+         * */
+        function ruleExist(port) {
+            for (let index = 0; index < firewallRules.length; index++) {
+
+                if (firewallRules[index]['port'] === port) {
+
+                    return index
+                }
+
+            }
+            return null
+        }
+
+        function updateLayoutFirewall() {
+            let newDataHTML = ''
+            firewallRules.forEach((rule) => {
+                newDataHTML += `<tr><td>${rule['port']}</td><td>${rule['type']}</td></tr>`
+            })
+            document.getElementById('tbody-firewall').innerHTML = newDataHTML
+        }
+
+        // Library related
+        function showNotification(msg) {
+            Toastify({
+
+                text: msg,
+
+                duration: 1500
+
+            }).showToast();
+        }
+
+        function startFirewallSim(delivered = true) {
+            showNotification('Paket mulai dikirim')
+            // anime.speed = 0.
+            if (delivered) {
+
+                anime({
+                    targets: '#paket-prototipe',
+                    top: '0',
+                    right: '0',
+                    duration: 5000,
+                    easing: 'linear',
+                    complete: (anim) => {
+                        showNotification('Paket terkirim')
+                    }
+                });
+
+            } else {
+                anime({
+                    targets: '#paket-prototipe',
+                    top: '0',
+                    right: '50%',
+                    duration: 5000,
+                    easing: 'linear',
+                    complete: (anim) => {
+                        showNotification('Paket gagal dikirim!')
+                    }
+                });
+
+
+            }
+        }
+
+        function onStartClicked() {
+            onResetPosClicked()
+            if (isBlocked(getPacketDestinationPort())) {
+                startFirewallSim(false)
+            }
+            else {
+                startFirewallSim()
+            }
+
+        }
+
+        function onResetPosClicked() {
+            anime({
+                targets: '#paket-prototipe',
+                top: '0',
+                right: '95%',
+                duration: 100,
+                easing: 'linear'
+            });
+            
+        }
+
+        function clearFirewallRules() {
+            firewallRules = []
+            updateLayoutFirewall()
+            showNotification('Firewall direset')
+        }
+
+
+    </script>
+</body>
+
+
+</html>

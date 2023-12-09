@@ -1,45 +1,56 @@
+<!--
+    Muhammad Khuirul Huda 
+    https://github.com/Khuirul-Huda/fw-ec-simulation
+ -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+    :root {
+    font-family: 'Inter', sans-serif;
+    }
+</style>
     <title>Firewall dan Enkripsi | Prototipe versi digital</title>
 </head>
 
-<body>
+<body class="bg-gradient-to-r from-indigo-400 to-cyan-400">
     <header>
 
     </header>
     <main class="container mx-auto">
-        <section class="border rounded-lg p-5 m-5">
+        <section class="border rounded-lg p-5 m-5 bg-white">
             <h2 class="font-bold text-3xl">1. Firewall</h2>
             <p>Simulasi sederhana bagaimana firewall bekerja..</p>
             <div>
                 <button id="start-sim"
-                    class="p-1 px-2 bg-yellow-300 rounded-full transition-all hover:-translate-y-1">Mulai</button>
+                    class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Mulai</button>
                 <button id="reset-sim"
-                    class="p-1 px-2 bg-yellow-300 rounded-full transition-all hover:-translate-y-1">Reset</button>
+                    class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Reset</button>
                     <button id="reset-firewall"
-                    class="p-1 px-2 bg-yellow-300 rounded-full transition-all hover:-translate-y-1">Reset Firewall</button>
+                    class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Reset Firewall</button>
 
             </div>
-            <div class="my-5 h-20 w-full relative rounded-lg">
-                <div class="absolute ring-4 ring-green-200 w-14 top-0  h-10 bg-green-500 rounded-lg p-2"
+            <div class="my-5 h-10 w-full relative">
+                <div class="absolute ring-4 ring-green-200  top-0  h-10 bg-green-500 rounded-lg p-2 text-white"
                     id="paket-prototipe">Paket</div>
-                <div class="absolute ring-4 ring-blue-200 w-14 top-0  h-10 bg-blue-500 rounded-lg p-2"
+                <div class="absolute ring-4 ring-blue-200 top-0  h-10 bg-blue-500 rounded-lg p-2 text-white"
                     id="client-prototipe">Client</div>
-                <div class="absolute   left-1/2 h-10  bg-purple-300 flex items-center px-32 ring-4 ring-purple-200"
+                <div class="absolute   hover:scale-105 transition-all left-1/2 h-10  bg-purple-300 flex items-center lg:px-32 sm:px-8 md:px-10 px-3 ring-4 text-white ring-purple-200"
                     id="firewall-prototipe"> <span>Firewall</span>
                 </div>
-                <div class="absolute w-18 h-10 top-0 right-0  bg-blue-400 ring-4 ring-blue-400 rounded-lg px-5 flex items-center"
+                <div class="absolute w-18 h-10 top-0 right-0  bg-blue-400 ring-4 ring-blue-200 text-white rounded-lg px-5 flex items-center"
                     id="server-prototipe">Server</div>
             </div>
             <div class="flex flex-wrap justify-center">
-                <form action="" id="paket" class="border rounded-lg m-5 p-2 flex flex-col">
+                <form action="" id="paket" class="shadow-md border rounded-md m-5 p-5 flex flex-col">
                     <h3 class="font-bold text-lg">Konfigurasi Paket</h3>
                     <label for="destination-port">Destination Port: </label>
                     <input class="border p-1 rounded-md" value="80" placeholder="80 (default)" type="number"
@@ -47,7 +58,7 @@
                     <!-- <button class="block p-2 mt-1 bg-yellow-300 hover:-translate-y-1 transition-all">Kirim Paket</button> -->
 
                 </form>
-                <form action="" id="firewall-rules" class="border rounded-lg m-5 p-2 flex flex-col">
+                <form action="" id="firewall-rules" class="shadow-md border rounded-md m-5 p-5 flex flex-col">
                     <h3 class="font-bold text-lg">Aturan Firewall</h3>
                     <label for="port-input">Masukkan Port:</label>
                     <input class="border rounded-md p-2" placeholder="80" type="text" name="port-input" id="port-input"
@@ -60,7 +71,7 @@
                     </select>
 
                     <button type="submit"
-                        class="p-2 px-4 bg-yellow-300 rounded-full transition-all hover:-translate-y-1">Tambah</button>
+                        class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Tambah</button>
                 </form>
             </div>
 
@@ -76,7 +87,7 @@
                         </thead>
                         <tbody id="tbody-firewall">
                             <tr>
-                                <td>19132</td>
+                                <td></td>
                                 <td>ALLOW</td>
                             </tr>
                         </tbody>
@@ -97,7 +108,6 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
     <script>
-
 
         tippy('#paket-prototipe', {
             content: 'Source IP: 20.20.20.20 <br> Source Port: 65746 <br> Destination IP: 36.72.0.102 <br> Destination Port: (sesuai konfigurasi)',
@@ -127,10 +137,11 @@
         //  START
 
         let firewallRules = [{ "port": 22, "type": "ALLOW" }]
+        let isRunning = false
         updateLayoutFirewall()
 
         const pixelRatio = window.devicePixelRatio || 1
-        console.log( )
+        
         if (screen.width * pixelRatio < 1366) {
             showNotification('Gunakan perangkat desktop')
         }
@@ -217,6 +228,7 @@
 
         function startFirewallSim(delivered = true) {
             showNotification('Paket mulai dikirim')
+            isRunning = true
             // anime.speed = 0.
             if (delivered) {
 
@@ -228,6 +240,7 @@
                     easing: 'linear',
                     complete: (anim) => {
                         showNotification('Paket terkirim')
+                        isRunning = false
                     }
                 });
 
@@ -236,10 +249,11 @@
                     targets: '#paket-prototipe',
                     top: '0',
                     right: '50%',
-                    duration: 5000,
+                    duration: 2500,
                     easing: 'linear',
                     complete: (anim) => {
                         showNotification('Paket gagal dikirim!')
+                        isRunning = false
                     }
                 });
 
@@ -247,8 +261,13 @@
             }
         }
 
-        function onStartClicked() {
-            onResetPosClicked()
+        function onStartClicked(reset = false) {
+            if (isRunning) return
+            if (!reset) {
+                onResetPosClicked(true)
+                return
+            }
+            
             if (isBlocked(getPacketDestinationPort())) {
                 startFirewallSim(false)
             }
@@ -258,7 +277,21 @@
 
         }
 
-        function onResetPosClicked() {
+        function onResetPosClicked(start = false) {
+            if (isRunning) return
+            if (start) {
+                anime({
+                targets: '#paket-prototipe',
+                top: '0',
+                right: '95%',
+                duration: 0,
+                easing: 'linear',
+                complete: (anim) => {
+                    onStartClicked(true)
+                }
+            });
+            return
+            }
             anime({
                 targets: '#paket-prototipe',
                 top: '0',

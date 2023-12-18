@@ -4,6 +4,7 @@
  -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +12,13 @@
     <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-<style>
-    :root {
-    font-family: 'Inter', sans-serif;
-    }
-</style>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
     <title>Firewall dan Enkripsi | Prototipe versi digital</title>
 </head>
 
@@ -34,8 +35,9 @@
                     class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Mulai</button>
                 <button id="reset-sim"
                     class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Reset</button>
-                    <button id="reset-firewall"
-                    class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Reset Firewall</button>
+                <button id="reset-firewall"
+                    class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Reset
+                    Firewall</button>
 
             </div>
             <div class="my-5 h-10 w-full relative">
@@ -53,16 +55,16 @@
                 <form action="" id="paket" class="shadow-md border rounded-md m-5 p-5 flex flex-col">
                     <h3 class="font-bold text-lg text-indigo-800">Konfigurasi Paket</h3>
                     <label for="destination-port" class="text-indigo-400">Destination Port: </label>
-                    <input class="border p-1 rounded-md text-indigo-400" value="80" placeholder="80 (default)" type="number"
-                        name="destination-port" id="destination-port">
+                    <input class="border p-1 rounded-md text-indigo-400" value="80" placeholder="80 (default)"
+                        type="number" name="destination-port" id="destination-port">
                     <!-- <button class="block p-2 mt-1 bg-yellow-300 hover:-translate-y-1 transition-all">Kirim Paket</button> -->
 
                 </form>
                 <form action="" id="firewall-rules" class="shadow-md border rounded-md m-5 p-5 flex flex-col">
                     <h3 class="font-bold text-lg text-indigo-800">Aturan Firewall</h3>
                     <label for="port-input" class=" text-indigo-400">Masukkan Port:</label>
-                    <input class="border rounded-md p-2 text-indigo-400" placeholder="80" type="text" name="port-input" id="port-input"
-                        required>
+                    <input class="border rounded-md p-2 text-indigo-400" placeholder="80" type="text" name="port-input"
+                        id="port-input" required>
 
                     <label for="rule-type" class="text-indigo-400">Jenis Aturan:</label>
                     <select name="rule-type" class="my-1 p-2 rounded-md mb-2 text-indigo-400" id="rule-type">
@@ -102,17 +104,60 @@
 
         <section class=" rounded-lg p-5 m-5 bg-white">
             <h2 class="font-bold text-3xl text-indigo-800">2. Enkripsi</h2>
-            <p class="text-indigo-400">Simulasi sederhana bagaimana enkripsi bekerja..</p>
+            <p class="text-indigo-400">Simulasi sederhana bagaimana enkripsi bekerja.. <br> Simulasi ini benar - benar
+                menggunakan CryptoJS</p>
+
+            <div class="flex flex-wrap justify-center m-2 p-1">
+                <div class="shadow  rounded-lg p-3">
+                    <h3 class="bold text-indigo-800 text-lg mb-2">Enkripsi Pesan</h3>
+                    <form id="encrypt-form">
+                        <label for="encrypt-form-pesan" class="text-indigo-400">Masukkan Pesan:</label>
+                        <input class="block border p-1 rounded-lg text-indigo-600" placeholder="Jadi seperti ini..."
+                            type="text" name="encrypt-form-pesan" id="encrypt-form-pesan" required>
+                        <label for="encrypt-form-sandi" class="text-indigo-400">Masukkan Kata Sandi:</label>
+                        <input class="block border p-1 rounded-lg text-indigo-600" placeholder="1234ABC" type="text"
+                            name="encrypt-form-sandi" id="encrypt-form-sandi" required>
+
+                        <button type="submit"
+                            class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Enkripsi</button>
+                    </form>
+                </div>
+
+                <div class="shadow m-2 rounded-lg p-3">
+                    <h3 class="bold text-indigo-800 text-lg mb-2">Deskripsi Pesan</h3>
+                    <form id="decrypt-form">
+                        <label for="decrypt-form-pesan" class="text-indigo-400">Masukkan Pesan:</label>
+                        <input class="block border p-1 rounded-lg text-indigo-600" placeholder="Jadi seperti ini..."
+                            type="text" name="decrypt-form-pesan" id="decrypt-form-pesan" required>
+                        <label for="decrypt-form-sandi" class="text-indigo-400">Masukkan Kata Sandi:</label>
+                        <input class="block border p-1 rounded-lg text-indigo-600" placeholder="1234ABC" type="text"
+                            name="decrypt-form-sandi" id="decrypt-form-sandi" required>
+
+                        <button type="submit"
+                            class="p-1 px-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-sm transition-all hover:-translate-y-1">Deskripsi</button>
+                    </form>
+                </div>
+
+            </div>
 
         </section>
     </main>
-    <footer>
-
+    <footer class="text-center text-white">
+        Made with &lt;3 in Indonesia <br>
+        <a href="https://github.com/Khuirul-Huda/fw-ec-simulation">Open source</a>
     </footer>
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <script src="https://unpkg.com/tippy.js@6"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"
+        integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.4.0/clipboard.min.js"
+        integrity="sha512-iJh0F10blr9SC3d0Ow1ZKHi9kt12NYa+ISlmCdlCdNZzFwjH1JppRTeAnypvUez01HroZhAmP4ro4AvZ/rG0UQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <!-- /HD28/ -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
 
         tippy('#paket-prototipe', {
@@ -147,7 +192,7 @@
         updateLayoutFirewall()
 
         const pixelRatio = window.devicePixelRatio || 1
-        
+
         if (screen.width * pixelRatio < 1366) {
             showNotification('Gunakan perangkat desktop')
         }
@@ -273,7 +318,7 @@
                 onResetPosClicked(true)
                 return
             }
-            
+
             if (isBlocked(getPacketDestinationPort())) {
                 startFirewallSim(false)
             }
@@ -287,16 +332,16 @@
             if (isRunning) return
             if (start) {
                 anime({
-                targets: '#paket-prototipe',
-                top: '0',
-                right: '95%',
-                duration: 0,
-                easing: 'linear',
-                complete: (anim) => {
-                    onStartClicked(true)
-                }
-            });
-            return
+                    targets: '#paket-prototipe',
+                    top: '0',
+                    right: '95%',
+                    duration: 0,
+                    easing: 'linear',
+                    complete: (anim) => {
+                        onStartClicked(true)
+                    }
+                });
+                return
             }
             anime({
                 targets: '#paket-prototipe',
@@ -305,7 +350,7 @@
                 duration: 100,
                 easing: 'linear'
             });
-            
+
         }
 
         function clearFirewallRules() {
@@ -314,7 +359,58 @@
             showNotification('Firewall direset')
         }
 
+        /**
+         * 
+         * ENCRYPTION
+         * 
+         * */
 
+        function encrypt(msg, pass) {
+            return CryptoJS.AES.encrypt(msg, pass).toString()
+        }
+
+        function decrypt(msg, pass) {
+            return CryptoJS.AES.decrypt(msg, pass).toString(CryptoJS.enc.Utf8)
+        }
+
+        function popupResult(msg, title) {
+            Swal.fire({
+                title: title,
+                text: msg,
+                icon: "success",
+                confirmButtonText: "Copy",
+                showCancelButton: false,
+                showCloseButton: true,
+                customClass: {
+                    title: "text-indigo-800",
+                    htmlContainer: "p-1 border rounded-md text-md text-indigo-600",
+                    confirmButton: "p-2 mx-1 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-md transition-all hover:-translate-y-1",
+                    cancelButton: "p-2 bg-indigo-300 text-white shadow-md shadow-indigo-300 rounded-md text-md transition-all hover:-translate-y-1"
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                
+                if (result.isConfirmed) {
+                    navigator.clipboard.writeText(msg)
+                    showNotification('Disalin ke clipboard')
+                } else if (result.isDenied) {
+
+                }
+            })
+        }
+
+
+        //   Form handler
+        document.getElementById('decrypt-form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            popupResult(decrypt(document.getElementById('decrypt-form-pesan').value, document.getElementById('decrypt-form-sandi').value), "Decrypted")
+        })
+
+        document.getElementById('encrypt-form').addEventListener('submit', (e) => {
+            e.preventDefault()
+            popupResult(encrypt(document.getElementById('encrypt-form-pesan').value, document.getElementById('encrypt-form-sandi').value), "encrypted")
+
+        })
     </script>
 </body>
 
